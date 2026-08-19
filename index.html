@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rhythm — Student Signal Reader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ambient hero wave sits behind everything at the top of the page -->
+<header class="hero">
+  <svg class="hero-wave" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
+    <path id="hero-wave-path" d=""></path>
+  </svg>
+  <div class="hero-inner">
+    <span class="eyebrow">Student Wellness · Signal Reader</span>
+    <h1 class="hero-title">How's your <em>rhythm</em>,<br>today?</h1>
+    <p class="hero-sub">Sleep, screens, study, stress — four beats that make up a day. Trace yours below and we'll read back the pattern. Not a diagnosis, just a mirror.</p>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- WIZARD PANEL -->
+  <section class="panel wizard-panel" aria-labelledby="form-heading">
+
+    <nav class="rail" aria-label="Form progress">
+      <button type="button" class="rail-step is-active" data-step="0">
+        <span class="rail-dot">1</span>
+        <span class="rail-text">
+          <span class="rail-label">Profile</span>
+          <span class="rail-hint">Who you are</span>
+        </span>
+      </button>
+      <span class="rail-line" aria-hidden="true"></span>
+      <button type="button" class="rail-step" data-step="1">
+        <span class="rail-dot">2</span>
+        <span class="rail-text">
+          <span class="rail-label">Habits</span>
+          <span class="rail-hint">Screens &amp; study</span>
+        </span>
+      </button>
+      <span class="rail-line" aria-hidden="true"></span>
+      <button type="button" class="rail-step" data-step="2">
+        <span class="rail-dot">3</span>
+        <span class="rail-text">
+          <span class="rail-label">Rhythm</span>
+          <span class="rail-hint">Rest &amp; stress</span>
+        </span>
+      </button>
+    </nav>
+
+    <form id="predict-form" novalidate>
+
+      <!-- STEP 0 — PROFILE -->
+      <div class="step is-active" data-step="0">
+        <div class="step-head">
+          <h2 id="form-heading">Tell us who's tracing this</h2>
+          <p>The basics — used only to calibrate the model.</p>
+        </div>
+
+        <div class="field">
+          <label for="age">Age</label>
+          <div class="stepper" data-min="10" data-max="100">
+            <button type="button" class="stepper-btn" data-dir="-1" aria-label="Decrease age">−</button>
+            <input type="number" id="age" name="age" min="10" max="100" step="1" required placeholder="21" />
+            <button type="button" class="stepper-btn" data-dir="1" aria-label="Increase age">+</button>
+          </div>
+          <span class="error-msg" data-for="age"></span>
+        </div>
+
+        <div class="field">
+          <label>Gender</label>
+          <div class="pillgroup" data-name="gender">
+            <button type="button" class="pill" data-value="Female">Female</button>
+            <button type="button" class="pill" data-value="Male">Male</button>
+          </div>
+          <input type="hidden" id="gender" name="gender" required />
+          <span class="error-msg" data-for="gender"></span>
+        </div>
+
+        <div class="field">
+          <label for="country">Country</label>
+          <input type="text" id="country" name="country" list="country-list" required placeholder="e.g. India" autocomplete="off" />
+          <datalist id="country-list">
+            <option value="India"></option>
+            <option value="USA"></option>
+            <option value="Canada"></option>
+            <option value="Australia"></option>
+            <option value="UK"></option>
+            <option value="Germany"></option>
+            <option value="Mexico"></option>
+            <option value="Turkey"></option>
+            <option value="France"></option>
+          </datalist>
+          <span class="hint">Not listed? Type it anyway.</span>
+          <span class="error-msg" data-for="country"></span>
+        </div>
+
+        <div class="step-nav">
+          <span></span>
+          <button type="button" class="btn-primary step-next">Next: Habits <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+
+      <!-- STEP 1 — HABITS -->
+      <div class="step" data-step="1">
+        <div class="step-head">
+          <h2>Your digital &amp; academic footprint</h2>
+          <p>How you spend the screen-lit hours.</p>
+        </div>
+
+        <div class="field">
+          <label>Academic level</label>
+          <div class="pillgroup" data-name="academic_level">
+            <button type="button" class="pill" data-value="High School">High School</button>
+            <button type="button" class="pill" data-value="Undergraduate">Undergraduate</button>
+            <button type="button" class="pill" data-value="Graduate">Graduate</button>
+          </div>
+          <input type="hidden" id="academic_level" name="academic_level" required />
+          <span class="error-msg" data-for="academic_level"></span>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="most_used_platform">Most-used platform</label>
+            <select id="most_used_platform" name="most_used_platform" required>
+              <option value="" disabled selected hidden>Select</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Snapchat">Snapchat</option>
+              <option value="Twitter">Twitter</option>
+              <option value="YouTube">YouTube</option>
+              <option value="TikTok">TikTok</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="LINE">LINE</option>
+              <option value="KakaoTalk">KakaoTalk</option>
+              <option value="VKontakte">VKontakte</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="WeChat">WeChat</option>
+            </select>
+            <span class="error-msg" data-for="most_used_platform"></span>
+          </div>
+
+          <div class="field">
+            <label for="daily_unlocks">Daily phone unlocks</label>
+            <div class="stepper" data-min="0" data-max="500" data-step="5">
+              <button type="button" class="stepper-btn" data-dir="-1" aria-label="Decrease unlocks">−</button>
+              <input type="number" id="daily_unlocks" name="daily_unlocks" min="0" step="1" required placeholder="60" />
+              <button type="button" class="stepper-btn" data-dir="1" aria-label="Increase unlocks">+</button>
+            </div>
+            <span class="error-msg" data-for="daily_unlocks"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Primary purpose</label>
+          <div class="pillgroup pillgroup-4" data-name="purpose_of_use">
+            <button type="button" class="pill" data-value="Networking">Networking</button>
+            <button type="button" class="pill" data-value="Education">Education</button>
+            <button type="button" class="pill" data-value="Entertainment">Entertainment</button>
+            <button type="button" class="pill" data-value="News">News</button>
+          </div>
+          <input type="hidden" id="purpose_of_use" name="purpose_of_use" required />
+          <span class="error-msg" data-for="purpose_of_use"></span>
+        </div>
+
+        <div class="field">
+          <div class="slider-label-row">
+            <label for="avg_daily_usage_hours">Avg. daily screen time</label>
+            <span class="slider-readout" id="avg_daily_usage_hours-readout">0.0 hrs</span>
+          </div>
+          <input type="range" id="avg_daily_usage_hours" name="avg_daily_usage_hours" min="0" max="16" step="0.1" value="4" required class="slider slider-amber" />
+          <span class="error-msg" data-for="avg_daily_usage_hours"></span>
+        </div>
+
+        <div class="step-nav">
+          <button type="button" class="btn-ghost step-back">
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M13 5H1M6 1L1 5l5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back
+          </button>
+          <button type="button" class="btn-primary step-next">Next: Rhythm <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+
+      <!-- STEP 2 — LIFESTYLE & STRESS -->
+      <div class="step" data-step="2">
+        <div class="step-head">
+          <h2>Rest, movement, and pressure</h2>
+          <p>The counterweights to a screen-heavy day.</p>
+        </div>
+
+        <div class="field">
+          <div class="slider-label-row">
+            <label for="study_hours">Study hours / day</label>
+            <span class="slider-readout" id="study_hours-readout">0.0 hrs</span>
+          </div>
+          <input type="range" id="study_hours" name="study_hours" min="0" max="16" step="0.1" value="4" required class="slider slider-rose" />
+          <span class="error-msg" data-for="study_hours"></span>
+        </div>
+
+        <div class="field">
+          <div class="slider-label-row">
+            <label for="physical_activity_hours">Physical activity / day</label>
+            <span class="slider-readout" id="physical_activity_hours-readout">0.0 hrs</span>
+          </div>
+          <input type="range" id="physical_activity_hours" name="physical_activity_hours" min="0" max="8" step="0.1" value="1" required class="slider slider-mint" />
+          <span class="error-msg" data-for="physical_activity_hours"></span>
+        </div>
+
+        <div class="field">
+          <div class="slider-label-row">
+            <label for="sleep_hours_per_night">Sleep / night</label>
+            <span class="slider-readout" id="sleep_hours_per_night-readout">0.0 hrs</span>
+          </div>
+          <input type="range" id="sleep_hours_per_night" name="sleep_hours_per_night" min="0" max="12" step="0.1" value="7" required class="slider slider-blue" />
+          <span class="error-msg" data-for="sleep_hours_per_night"></span>
+        </div>
+
+        <div class="field">
+          <label>Perceived stress level</label>
+          <div class="segmented" id="stress_level_group" data-name="stress_level">
+            <button type="button" class="seg-btn" data-value="Low">Low</button>
+            <button type="button" class="seg-btn" data-value="Medium">Medium</button>
+            <button type="button" class="seg-btn" data-value="High">High</button>
+            <button type="button" class="seg-btn" data-value="Very High">Very High</button>
+          </div>
+          <input type="hidden" id="stress_level" name="stress_level" required />
+          <span class="error-msg" data-for="stress_level"></span>
+        </div>
+
+        <div class="step-nav">
+          <button type="button" class="btn-ghost step-back">
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M13 5H1M6 1L1 5l5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back
+          </button>
+          <button type="submit" class="btn-primary submit-btn" id="submit-btn">
+            <span class="btn-label">Read my signal</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </section>
+
+  <!-- SIGNAL PANEL -->
+  <aside class="panel signal-panel" aria-live="polite">
+    <div class="signal-inner">
+
+      <div class="signal-wave-wrap">
+        <svg class="signal-wave" id="signal-wave" viewBox="0 0 400 160" preserveAspectRatio="none" aria-hidden="true">
+          <path id="wave-path" d=""></path>
+        </svg>
+      </div>
+
+      <div class="signal-body">
+
+        <div class="signal-state is-active" id="state-idle">
+          <p class="signal-kicker">Awaiting input</p>
+          <p class="signal-copy">Your live signal will trace itself here as you move through the three steps.</p>
+        </div>
+
+        <div class="signal-state" id="state-loading">
+          <p class="signal-kicker">Reading…</p>
+          <p class="signal-copy">Running your rhythm through the model.</p>
+        </div>
+
+        <div class="signal-state" id="state-result">
+          <div class="score-readout">
+            <span class="score-number" id="score-number">0.0</span>
+            <span class="score-max">/ 10</span>
+          </div>
+          <p class="score-band" id="score-band">—</p>
+          <p class="signal-copy" id="score-context"></p>
+          <button type="button" class="btn-ghost reset-btn" id="reset-btn">Trace another rhythm</button>
+        </div>
+
+        <div class="signal-state" id="state-error">
+          <p class="signal-kicker signal-kicker-error" id="error-label">Signal lost</p>
+          <p class="signal-copy" id="error-copy"></p>
+          <button type="button" class="btn-ghost reset-btn" id="error-retry-btn">Try again</button>
+        </div>
+
+      </div>
+    </div>
+  </aside>
+
+</main>
+
+<footer class="site-footer">
+  <p>Built for informational purposes only — this is not a clinical assessment. If you're struggling, please talk to someone you trust.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
