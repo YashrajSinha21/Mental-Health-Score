@@ -3,7 +3,7 @@
 
   // Point this at wherever your FastAPI backend is running.
   // Local dev default, matching: uvicorn main:app --port 2200 --reload
-  const API_BASE = "http://127.0.0.1:2200";
+  const API_BASE = "https://mental-health-score-5-elog.onrender.com";
 
   const form = document.getElementById("predict-form");
   const submitBtn = document.getElementById("submit-btn");
